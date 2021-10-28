@@ -103,22 +103,8 @@ namespace WebAddressBookTests
         public ContactHelper RemoveContact()
         {
             driver.FindElement(By.XPath("//input[@value = 'Delete']")).Click();
-            AlertAccept();
+            driver.SwitchTo().Alert().Accept();
             return this;
-        }
-
-        public bool AlertAccept()
-        {
-            try
-            {
-                IAlert alert = driver.SwitchTo().Alert();
-                alert.Accept();
-                return true;
-            }
-            catch (NoAlertPresentException)
-            {
-                return false;
-            }
         }
     }
 }
