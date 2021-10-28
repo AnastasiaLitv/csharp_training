@@ -10,6 +10,7 @@ namespace WebAddressBookTests
             :base(manager) 
         { 
         }
+
         public void Login(AccountData account)
         {
             driver.FindElement(By.Name("user")).Click();

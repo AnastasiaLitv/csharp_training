@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 
 namespace WebAddressBookTests
 {
@@ -8,6 +9,32 @@ namespace WebAddressBookTests
             : base(manager)
         { 
         }
+        public ContactHelper Create(ContactData contact)
+        {
+            manager.Navigator.GoToContactPage();
+
+            FillContactForm(contact);
+            Submit();
+            ReturnToHomePage(); 
+            return this;
+        }
+
+        public ContactHelper Modify(int p, ContactData newData)
+        {
+            EditContact(p);
+            FillContactForm(newData);
+            SubmitContactModification();
+            ReturnToHomePage();
+            return this;
+        }
+
+        public ContactHelper Remove(int p)
+        {
+            SelectContact(p);
+            RemoveContact();
+            return this;
+        }
+
         public ContactHelper ReturnToHomePage()
         {
             driver.FindElement(By.LinkText("home page")).Click();
@@ -56,6 +83,42 @@ namespace WebAddressBookTests
             driver.FindElement(By.Name("notes")).Clear();
             driver.FindElement(By.Name("notes")).SendKeys(contact.Notes);
             return this;
+        }
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public ContactHelper EditContact(int index)
+        {
+            driver.FindElement(By.XPath("//img[@title = 'Edit'][" + index + "]")).Click();
+            return this;
+        }
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("//td[" + index + "]/input")).Click();
+            return this;
+        }
+        public ContactHelper RemoveContact()
+        {
+            driver.FindElement(By.XPath("//input[@value = 'Delete']")).Click();
+            AlertAccept();
+            return this;
+        }
+
+        public bool AlertAccept()
+        {
+            try
+            {
+                IAlert alert = driver.SwitchTo().Alert();
+                alert.Accept();
+                return true;
+            }
+            catch (NoAlertPresentException)
+            {
+                return false;
+            }
         }
     }
 }

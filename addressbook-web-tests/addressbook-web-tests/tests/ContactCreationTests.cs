@@ -9,7 +9,6 @@ namespace WebAddressBookTests
         [Test]
         public void ContactCreationTest()
         {
-            app.Navigator.GoToContactPage();
             ContactData contact = new ContactData("qqq", "www");
             contact.Middlename = "erwe";
             contact.Title = "qqsq";
@@ -20,10 +19,8 @@ namespace WebAddressBookTests
             contact.Mobile = "wmwmw";
             contact.Email = "qqeeeq";
             contact.Notes = "wekrweprkw";
-            app.Contact
-                .FillContactForm(contact)
-                .Submit()
-                .ReturnToHomePage();
+
+            app.Contact.Create(contact);
         }
     }
 }
