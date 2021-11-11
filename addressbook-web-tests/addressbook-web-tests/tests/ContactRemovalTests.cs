@@ -20,7 +20,9 @@ namespace WebAddressBookTests
             contact.Email = "qqeeeq";
             contact.Notes = "wekrweprkw";
 
-            app.Contact.Remove(1, contact);
+            app.Contact.IsContactExist(contact);
+
+            app.Contact.Remove(1);
         }
     }
 }

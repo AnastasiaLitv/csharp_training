@@ -13,7 +13,9 @@ namespace WebAddressBookTests
             group.Header = "new";
             group.Footer = "lalala";
 
-            app.Group.Remove(1, group);
+            app.Group.IsGroupExist(group);
+
+            app.Group.Remove(1);
         }
     }
 }

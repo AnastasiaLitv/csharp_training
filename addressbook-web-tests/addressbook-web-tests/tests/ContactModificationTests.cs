@@ -31,7 +31,9 @@ namespace WebAddressBookTests
             newData.Email = "222uuu";
             newData.Notes = "ppppp";
 
-            app.Contact.Modify(1, contact, newData);
+            app.Contact.IsContactExist(contact);
+
+            app.Contact.Modify(1, newData);
         }
     }
 }

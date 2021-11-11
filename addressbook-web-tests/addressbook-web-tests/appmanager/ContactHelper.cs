@@ -19,12 +19,8 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public ContactHelper Modify(int p, ContactData contact, ContactData newData)
+        public ContactHelper Modify(int p, ContactData newData)
         {
-            if (!IsContactExist())
-            {
-                Create(contact);
-            }
             EditContact(p);
             FillContactForm(newData);
             SubmitContactModification();
@@ -33,12 +29,8 @@ namespace WebAddressBookTests
         }
        
 
-        public ContactHelper Remove(int p, ContactData contact)
+        public ContactHelper Remove(int p)
         {
-            if (!IsContactExist())
-            {
-                Create(contact);
-            }
             SelectContact(p);
             RemoveContact();
             return this;
@@ -47,6 +39,15 @@ namespace WebAddressBookTests
         public bool IsContactExist()
         {
             return IsElementPresent(By.XPath("//img[@title = 'Edit']"));
+        }
+
+        public bool IsContactExist(ContactData contact)
+        {
+            return IsContactExist();
+            if (!IsContactExist())
+            {
+                Create(contact);
+            }
         }
 
         public ContactHelper ReturnToHomePage()
