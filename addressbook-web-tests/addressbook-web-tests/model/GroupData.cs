@@ -54,6 +54,7 @@ namespace WebAddressBookTests
             {
                 return 1;
             }
+
             return Name.CompareTo(other.Name);
         }
 

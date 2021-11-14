@@ -144,6 +144,7 @@ namespace WebAddressBookTests
                 notes = value;
             }
         }
+
         public int CompareTo(ContactData other)
         {
             if (Object.ReferenceEquals(other, null))
@@ -151,7 +152,14 @@ namespace WebAddressBookTests
                 return 1;
             }
             
-            return Firstname.CompareTo(other.Firstname);
+            int result = Firstname.CompareTo(other.Firstname);
+
+            if(result != 0)
+            {
+                return result;
+            }
+
+            return Lastname.CompareTo(other.Lastname);
         }
 
         public bool Equals(ContactData other)
@@ -165,17 +173,17 @@ namespace WebAddressBookTests
                 return true;
             }
             
-            return Firstname == other.Firstname;
+            return Firstname == other.Firstname && Lastname == other.Lastname;
         }
 
         public override int GetHashCode()
         {
-            return Firstname.GetHashCode();
+            return Firstname.GetHashCode() + Lastname.GetHashCode();
         }
 
         public override string ToString()
         {
-            return Firstname;
+            return Lastname + " " + Firstname;
         }
     }
 }

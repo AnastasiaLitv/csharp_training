@@ -20,6 +20,7 @@ namespace WebAddressBookTests
             ReturnToGroupsPage();
             return this;
         }
+        private List<GroupData> groupCache = null;
 
         public List<GroupData> GetGroupList()
         {
