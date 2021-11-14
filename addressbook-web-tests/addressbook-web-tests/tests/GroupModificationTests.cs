@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace WebAddressBookTests
 {
@@ -19,7 +20,14 @@ namespace WebAddressBookTests
 
             app.Group.IsGroupExist(group);
 
-            app.Group.Modify(1, newData);
+            List<GroupData> oldGroups = app.Group.GetGroupList();
+
+            app.Group.Modify(0, newData);
+            List<GroupData> newGroups = app.Group.GetGroupList();
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }

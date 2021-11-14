@@ -13,12 +13,15 @@ namespace WebAddressBookTests
             group.Header = "erwe";
             group.Footer = "qqq";
 
-            //List<GroupData> oldGroups = app.Group.GetGroupList();
+            List<GroupData> oldGroups = app.Group.GetGroupList();
 
             app.Group.Create(group);
 
-           // List<GroupData> newGroups = app.Group.GetGroupList();
-           // Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
+            List<GroupData> newGroups = app.Group.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
 
         [Test]
@@ -28,7 +31,15 @@ namespace WebAddressBookTests
             group.Header = "";
             group.Footer = "";
 
+            List<GroupData> oldGroups = app.Group.GetGroupList();
+
             app.Group.Create(group);
+
+            List<GroupData> newGroups = app.Group.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace WebAddressBookTests
 {
@@ -33,7 +34,17 @@ namespace WebAddressBookTests
 
             app.Contact.IsContactExist(contact);
 
+            List<ContactData> oldContacts = app.Contact.GetContactList();
+
             app.Contact.Modify(1, newData);
+          
+            List<ContactData> newContacts = app.Contact.GetContactList();
+            oldContacts[0].Lastname = newData.Lastname;
+            oldContacts[0].Firstname = newData.Firstname;
+            oldContacts.Sort();
+            newContacts.Sort();
+
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace WebAddressBookTests
 {
@@ -20,7 +21,16 @@ namespace WebAddressBookTests
             contact.Email = "qqeeeq";
             contact.Notes = "wekrweprkw";
 
+            List<ContactData> oldContacts = app.Contact.GetContactList();
+
             app.Contact.Create(contact);
+
+            List<ContactData> newContacts = app.Contact.GetContactList();
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }
