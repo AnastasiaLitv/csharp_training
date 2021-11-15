@@ -20,19 +20,33 @@ namespace WebAddressBookTests
             return this;
         }
 
+        private List<ContactData> contactCache = null;
+
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.GoToHomePage();
-            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@class]"));
-           
-            foreach (IWebElement element in elements)
+            if (contactCache == null)
             {
-                IList<IWebElement> cells = element.FindElements(By.TagName("td"));
-                contacts.Add(new ContactData(cells[2].Text, cells[1].Text));
+                contactCache = new List<ContactData>();
+                List<ContactData> contacts = new List<ContactData>();
+                manager.Navigator.GoToHomePage();
+                ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@class]"));
+
+                foreach (IWebElement element in elements)
+                {
+                    IList<IWebElement> cells = element.FindElements(By.TagName("td"));
+                    contactCache.Add(new ContactData(cells[2].Text, cells[1].Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
+                }
             }
 
-            return contacts;
+            return new List<ContactData>(contactCache);
+        }
+
+        public int GetContactCount()
+        {
+            return driver.FindElements(By.XPath("//tr[@class]")).Count;
         }
 
         public ContactHelper Modify(int p, ContactData newData)
@@ -59,11 +73,11 @@ namespace WebAddressBookTests
 
         public bool IsContactExist(ContactData contact)
         {
-            return IsContactExist();
             if (!IsContactExist())
             {
                 Create(contact);
             }
+            return true;
         }
 
         public ContactHelper ReturnToHomePage()
@@ -75,6 +89,7 @@ namespace WebAddressBookTests
         public ContactHelper Submit()
         {
             driver.FindElement(By.Name("submit")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -96,6 +111,7 @@ namespace WebAddressBookTests
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -113,6 +129,7 @@ namespace WebAddressBookTests
         {
             driver.FindElement(By.XPath("//input[@value = 'Delete']")).Click();
             driver.SwitchTo().Alert().Accept();
+            contactCache = null;
             return this;
         }
     }
