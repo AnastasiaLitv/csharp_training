@@ -9,7 +9,7 @@ namespace WebAddressBookTests
     {
         public ContactHelper(ApplicationManager manager)
             : base(manager)
-        { 
+        {
         }
         public ContactHelper Create(ContactData contact)
         {
@@ -17,7 +17,7 @@ namespace WebAddressBookTests
 
             FillContactForm(contact);
             Submit();
-            ReturnToHomePage(); 
+            ReturnToHomePage();
             return this;
         }
 
@@ -28,7 +28,12 @@ namespace WebAddressBookTests
 
             string firstname = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string lastname = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string middlename = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string nickname = driver.FindElement(By.Name("nickname")).GetAttribute("value");
+            string title = driver.FindElement(By.Name("title")).GetAttribute("value");
+            string company = driver.FindElement(By.Name("company")).GetAttribute("value");
+            string notes = driver.FindElement(By.Name("notes")).GetAttribute("value");
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string email = driver.FindElement(By.Name("email")).GetAttribute("value");
@@ -36,10 +41,14 @@ namespace WebAddressBookTests
             return new ContactData(firstname, lastname)
             {
                 Address = address,
+                Nickname = nickname,
+                Title = title,
+                Company = company,
+                Notes = notes,
                 Email = email,
                 Home = homePhone,
-                Mobile = mobilePhone
-                
+                Mobile = mobilePhone,
+                Middlename = middlename
             };
         }
 
@@ -60,7 +69,27 @@ namespace WebAddressBookTests
                 Email = email,
                 AllPhones = allPhones
             };
+        }
+        public ContactData GetContactInfoFromDetailsPage(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            OpenContactDetailsPage(index);
+            string allElements = driver.FindElement(By.XPath("//div[@id = 'content']")).Text;
+            string allNames = driver.FindElement(By.XPath("//div[@id = 'content']/b")).Text;
 
+            return new ContactData(null, null)
+            {
+                AllElements = allElements,
+                AllNames = allNames
+            };
+
+        }
+
+        public void OpenContactDetailsPage(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[6]
+                .FindElement(By.TagName("a")).Click();
         }
 
         private List<ContactData> contactCache = null;
@@ -100,7 +129,7 @@ namespace WebAddressBookTests
             ReturnToHomePage();
             return this;
         }
-       
+
 
         public ContactHelper Remove(int p)
         {
@@ -179,7 +208,7 @@ namespace WebAddressBookTests
         public int GetNumberOfSearchResult()
         {
             manager.Navigator.GoToHomePage();
-           string text =  driver.FindElement(By.TagName("label")).Text;
+            string text = driver.FindElement(By.TagName("label")).Text;
             Match m = new Regex(@"\d+").Match(text);
             return Int32.Parse(m.Value);
 
