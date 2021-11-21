@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace WebAddressBookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
+        private string allPhones;
 
         public ContactData(string firstname, string lastname)
         {
@@ -36,6 +38,32 @@ namespace WebAddressBookTests
 
         public string Id { get; set; }
 
+        public string AllPhones
+        {
+            get {
+                if(allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (CleanUp(Home) + CleanUp(Mobile)).Trim();
+                }
+            }
+            set { 
+               allPhones = value;
+            }
+        }
+
+        private string CleanUp(string phone)
+        {
+            if(phone == null || phone == "")
+            {
+                return "";
+            }
+
+            return  Regex.Replace(phone, "[  ()-]", "") + "\r\n";
+        }
 
         public int CompareTo(ContactData other)
         {

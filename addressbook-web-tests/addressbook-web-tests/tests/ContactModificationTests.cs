@@ -16,8 +16,8 @@ namespace WebAddressBookTests
             contact.Nickname = "erwse";
             contact.Company = "qewq";
             contact.Address = "xxxs";
-            contact.Home = "pepe";
-            contact.Mobile = "wmwmw";
+            contact.Home = "(31)-11-1111";
+            contact.Mobile = "(33)33-33-333";
             contact.Email = "qqeeeq";
             contact.Notes = "wekrweprkw";
 
@@ -27,8 +27,8 @@ namespace WebAddressBookTests
             newData.Nickname = "dfgdfdfg";
             newData.Company = "dgfdrterter";
             newData.Address = "pepepe";
-            newData.Home = "srsrs";
-            newData.Mobile = "mgjdy";
+            newData.Home = "(44)44-44-444";
+            newData.Mobile = "(11)11-11-11";
             newData.Email = "222uuu";
             newData.Notes = "ppppp";
 

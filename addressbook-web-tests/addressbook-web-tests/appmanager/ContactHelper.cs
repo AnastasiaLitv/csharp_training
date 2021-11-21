@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace WebAddressBookTests
 {
@@ -18,6 +19,48 @@ namespace WebAddressBookTests
             Submit();
             ReturnToHomePage(); 
             return this;
+        }
+
+        public ContactData GetContactInfoFromEditForm(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            EditContact(index + 1);
+
+            string firstname = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastname = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+
+            return new ContactData(firstname, lastname)
+            {
+                Address = address,
+                Email = email,
+                Home = homePhone,
+                Mobile = mobilePhone
+                
+            };
+        }
+
+        public ContactData GetContactInfoFromTable(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"));
+            string lastname = cells[1].Text;
+            string firstname = cells[2].Text;
+            string address = cells[3].Text;
+            string email = cells[4].Text;
+            string allPhones = cells[5].Text;
+
+            return new ContactData(firstname, lastname)
+            {
+                Address = address,
+                Email = email,
+                AllPhones = allPhones
+            };
+
         }
 
         private List<ContactData> contactCache = null;
@@ -131,6 +174,15 @@ namespace WebAddressBookTests
             driver.SwitchTo().Alert().Accept();
             contactCache = null;
             return this;
+        }
+
+        public int GetNumberOfSearchResult()
+        {
+            manager.Navigator.GoToHomePage();
+           string text =  driver.FindElement(By.TagName("label")).Text;
+            Match m = new Regex(@"\d+").Match(text);
+            return Int32.Parse(m.Value);
+
         }
     }
 }
