@@ -287,7 +287,9 @@ namespace WebAddressBookTests
 
         public override string ToString()
         {
-            return Lastname + " " + Firstname;
+            return "lastname=" + Lastname + "\nfirstname=" + Firstname + "\nmiddlename=" + Middlename + "\ntitle=" + Title
+                + "\nnickname=" + Nickname + "\naddress=" + Address + "\nhomePhone=" + HomePhone + "\nnotes=" + Notes
+                + "\nmobile=" + Mobile + "\nemail=" + Email + "\nemail2=" + Email2 + "\nemail3=" + Email3; 
         }
     }
 }
