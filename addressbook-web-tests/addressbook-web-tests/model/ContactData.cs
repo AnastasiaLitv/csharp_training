@@ -8,6 +8,7 @@ namespace WebAddressBookTests
     {
         private string allPhones;
         private string allNames;
+        private string allEmails;
         private string allElements;
 
         public ContactData(string firstname, string lastname)
@@ -24,17 +25,35 @@ namespace WebAddressBookTests
 
         public string Nickname { get; set; }
 
-        public string Title { get; set; }
-
         public string Company { get; set; }
+
+        public string Title { get; set; }
 
         public string Address { get; set; }
 
-        public string Home { get; set; }
+        public string HomePhone { get; set; }
 
         public string Mobile { get; set; }
 
+        public string Work { get; set; }
+
+        public string Fax { get; set; }
+
         public string Email { get; set; }
+       
+        public string Email2 { get; set; }
+        
+        public string Email3 { get; set; }
+
+        public string HomePage { get; set; }
+
+        public string Birthday { get; set; }
+
+        public string Anniversary { get; set; }
+
+        public string SecondaryAddress { get; set; }
+
+        public string Home { get; set; }
 
         public string Notes { get; set; }
 
@@ -49,11 +68,29 @@ namespace WebAddressBookTests
                 }
                 else
                 {
-                    return (CleanUp(Home) + CleanUp(Mobile)).Trim();
+                    return (CleanUp(HomePhone) + CleanUp(Mobile)).Trim();
                 }
             }
             set { 
                allPhones = value;
+            }
+        }
+        public string AllEmails
+        {
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return (Email + " " + Email2 + " " + Email3).Trim();
+                }
+            }
+            set
+            {
+                allEmails = value;
             }
         }
         public string AllNames
@@ -85,19 +122,115 @@ namespace WebAddressBookTests
                 }
                 else
                 {
-                    return Firstname + " " + Middlename + " " + Lastname + "\r\n"
-                        + Nickname + "\r\n"
-                        + Title + "\r\n"
-                        + Company + "\r\n"
-                        + Address + "\r\n"
-                        + "\r\n"
-                        + "H: " + Home + "\r\n"
-                        + "M: " + Mobile +"\r\n"
-                        + "\r\n"
-                        + Email + "\r\n"
-                        + "\r\n"
-                        + "\r\n"
-                        + Notes;
+                    var result = Firstname;
+                    if (!string.IsNullOrEmpty(Middlename))
+                    {
+                        result += " " + Middlename;
+                    }
+
+                    if (!string.IsNullOrEmpty(Lastname))
+                    {
+                        result += " " + Lastname;
+                    }
+
+                    result += "\r\n";
+
+                    if (!string.IsNullOrEmpty(Nickname))
+                    {
+                        result += Nickname + "\r\n";
+                    }
+
+                    if (!string.IsNullOrEmpty(Title))
+                    {
+                        result += Title + "\r\n";
+                    }
+
+                    if (!string.IsNullOrEmpty(Company))
+                    {
+                        result += Company + "\r\n";
+                    }
+
+                    if (!string.IsNullOrEmpty(Address))
+                    {
+                        result += Address + "\r\n";
+                    }
+
+                    result += "\r\n";
+
+                    if (!string.IsNullOrEmpty(HomePhone))
+                    {
+                        result += "H: " + HomePhone + "\r\n";
+                    }
+
+                    if (!string.IsNullOrEmpty(Mobile))
+                    {
+                        result += "M: " + Mobile + "\r\n";
+                    }
+
+                    if (!string.IsNullOrEmpty(Work))
+                    {
+                        result += "W: " + Work + "\r\n";
+                    }
+
+                    if (!string.IsNullOrEmpty(Fax))
+                    {
+                        result += "F: " + Fax + "\r\n";
+                    }
+
+                    result += "\r\n";
+
+                    if (!string.IsNullOrEmpty(Email))
+                    {
+                        result += Email + "\r\n";
+                    }
+
+                    if (!string.IsNullOrEmpty(Email2))
+                    {
+                        result += Email2 + "\r\n";
+                    }
+
+                    if (!string.IsNullOrEmpty(Email3))
+                    {
+                        result += Email3 + "\r\n";
+                    }
+
+
+                    if (!string.IsNullOrEmpty(HomePage))
+                    {
+                        result += "Homepage:  " + HomePage + "\r\n";
+                    }
+
+
+                    if (!string.IsNullOrEmpty(Birthday))
+                    {
+                        result += "Birthday: " + Birthday + "\r\n";
+                    }
+
+                    if (!string.IsNullOrEmpty(Anniversary))
+                    {
+                        result += "Anniversary: " + Anniversary + "\r\n";
+                    }
+
+                    result += "\r\n";
+
+                    if (!string.IsNullOrEmpty(SecondaryAddress))
+                    {
+                        result += SecondaryAddress + "\r\n";
+                    }
+
+                    result += "\r\n";
+
+                    if (!string.IsNullOrEmpty(Home))
+                    {
+                        result += "P: " + Home + "\r\n";
+                    }
+
+                    if (!string.IsNullOrEmpty(Notes))
+                    {
+                        result += Notes;
+                    }
+
+                    return result;
                 }
             }
             set

@@ -16,9 +16,11 @@ namespace WebAddressBookTests
             contact.Nickname = "erwse";
             contact.Company = "qewq";
             contact.Address = "xxxs";
-            contact.Home = "(31)-11-1111";
+            contact.HomePhone = "(31)-11-1111";
             contact.Mobile = "(33)33-33-333";
-            contact.Email = "qqeeeq";
+            contact.Email = "qqeeeq@u.w";
+            contact.Email2 = "qqewwweq@u.w";
+            contact.Email3 = "eddeq@u.w";
             contact.Notes = "wekrweprkw";
 
             ContactData newData = new ContactData("test", "name");
@@ -27,9 +29,11 @@ namespace WebAddressBookTests
             newData.Nickname = "dfgdfdfg";
             newData.Company = "dgfdrterter";
             newData.Address = "pepepe";
-            newData.Home = "(44)44-44-444";
+            newData.HomePhone = "(44)44-44-444";
             newData.Mobile = "(11)11-11-11";
-            newData.Email = "222uuu";
+            newData.Email = "222uuu@o.o";
+            contact.Email2 = "ieieoe@u.w";
+            contact.Email3 = "pepepe@u.w";
             newData.Notes = "ppppp";
 
             app.Contact.IsContactExist(contact);

@@ -16,9 +16,11 @@ namespace WebAddressBookTests
             contact.Nickname = "erwse";
             contact.Company = "qewq";
             contact.Address = "xxxs";
-            contact.Home = "pepe";
+            contact.HomePhone = "(11)-2-2-2";
             contact.Mobile = "wmwmw";
-            contact.Email = "qqeeeq";
+            contact.Email = "qqeeeq@s.s";
+            contact.Email2 = "qqeeeq@g.c";
+            contact.Email3 = "qqeeeq@w.w";
             contact.Notes = "wekrweprkw";
 
             List<ContactData> oldContacts = app.Contact.GetContactList();

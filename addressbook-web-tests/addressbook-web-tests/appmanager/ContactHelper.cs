@@ -37,6 +37,8 @@ namespace WebAddressBookTests
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
             return new ContactData(firstname, lastname)
             {
@@ -46,7 +48,9 @@ namespace WebAddressBookTests
                 Company = company,
                 Notes = notes,
                 Email = email,
-                Home = homePhone,
+                Email2 = email2,
+                Email3 = email3,
+                HomePhone = homePhone,
                 Mobile = mobilePhone,
                 Middlename = middlename
             };
@@ -60,13 +64,13 @@ namespace WebAddressBookTests
             string lastname = cells[1].Text;
             string firstname = cells[2].Text;
             string address = cells[3].Text;
-            string email = cells[4].Text;
+            string allEmails = cells[4].Text;
             string allPhones = cells[5].Text;
 
             return new ContactData(firstname, lastname)
             {
                 Address = address,
-                Email = email,
+                AllEmails = allEmails,
                 AllPhones = allPhones
             };
         }
@@ -174,9 +178,11 @@ namespace WebAddressBookTests
             Type(By.Name("title"), contact.Title);
             Type(By.Name("company"), contact.Company);
             Type(By.Name("address"), contact.Address);
-            Type(By.Name("home"), contact.Home);
+            Type(By.Name("home"), contact.HomePhone);
             Type(By.Name("mobile"), contact.Mobile);
             Type(By.Name("email"), contact.Email);
+            Type(By.Name("email2"), contact.Email2);
+            Type(By.Name("email3"), contact.Email3);
             Type(By.Name("notes"), contact.Notes);
             return this;
         }
