@@ -85,7 +85,23 @@ namespace WebAddressBookTests
                 }
                 else
                 {
-                    return (Email + " " + Email2 + " " + Email3).Trim();
+                    var result = "";
+                    if (!string.IsNullOrEmpty(Email))
+                    {
+                        result += Email;
+                    }
+
+                    if (!string.IsNullOrEmpty(Email2))
+                    {
+                        result += " " + Email2;
+                    }
+
+                    if (!string.IsNullOrEmpty(Email3))
+                    {
+                        result += " " + Email3;
+                    }
+
+                    return result;
                 }
             }
             set
