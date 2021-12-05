@@ -1,5 +1,8 @@
-﻿using NUnit.Framework;
+﻿using Newtonsoft.Json;
+using NUnit.Framework;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace WebAddressBookTests
 {
@@ -28,8 +31,20 @@ namespace WebAddressBookTests
 
             return contacts;
         }
+        public static IEnumerable<ContactData> ContactDataFromXmlFile()
+        {
+            return (List<ContactData>)
+                 new XmlSerializer(typeof(List<ContactData>))
+                  .Deserialize(new StreamReader(@"contacts.xml"));
+        }
 
-        [Test, TestCaseSource("RandomContactDataProvider")]
+        public static IEnumerable<ContactData> ContactDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<ContactData>>
+                  (File.ReadAllText(@"contacts.json"));
+        }
+
+        [Test, TestCaseSource("ContactDataFromJsonFile")]
         public void ContactCreationTest(ContactData contact)
         {
             List<ContactData> oldContacts = app.Contact.GetContactList();
