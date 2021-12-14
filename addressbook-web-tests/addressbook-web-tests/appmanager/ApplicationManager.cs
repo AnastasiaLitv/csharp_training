@@ -20,7 +20,7 @@ namespace WebAddressBookTests
         private ApplicationManager()
         {
             driver = new ChromeDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
             baseURL = "http://localhost/addressbook/";
 
             loginHelper = new LoginHelper(this);

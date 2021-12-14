@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using System.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -31,7 +32,7 @@ namespace WebAddressBookTests
         {
             List<GroupData> groups = new List<GroupData>();
             string[] lines = File.ReadAllLines(@"groups.csv");
-            foreach( string l in lines)
+            foreach (string l in lines)
             {
                 string[] parts = l.Split(',');
                 groups.Add(new GroupData(parts[0])
@@ -46,9 +47,9 @@ namespace WebAddressBookTests
         }
         public static IEnumerable<GroupData> GroupDataFromXmlFile()
         {
-           return (List<GroupData>) 
-                new XmlSerializer(typeof(List<GroupData>))
-                 .Deserialize(new StreamReader(@"groups.xml"));
+            return (List<GroupData>)
+                 new XmlSerializer(typeof(List<GroupData>))
+                  .Deserialize(new StreamReader(@"groups.xml"));
         }
 
         public static IEnumerable<GroupData> GroupDataFromJsonFile()
@@ -64,7 +65,7 @@ namespace WebAddressBookTests
             Excel.Worksheet sheet = wb.ActiveSheet;
             Excel.Range range = sheet.UsedRange;
 
-            for( int i = 1; i <= range.Rows.Count; i++ )
+            for (int i = 1; i <= range.Rows.Count; i++)
             {
                 groups.Add(new GroupData()
                 {
@@ -81,21 +82,40 @@ namespace WebAddressBookTests
             return groups;
         }
 
-        [Test, TestCaseSource("GroupDataFromXmlFile")]
+        [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTest(GroupData group)
         {
-            List<GroupData> oldGroups = app.Group.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.Group.Create(group);
 
             Assert.AreEqual(oldGroups.Count + 1, app.Group.GetGroupCount());
 
-            List<GroupData> newGroups = app.Group.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
         }
 
+        [Test]
+        public void TestDbConnection()
+        {
+            List<GroupData> fromUI = app.Group.GetGroupList();
+
+            List<GroupData> fromDb = GroupData.GetAll();
+           
+        }
+
+        [Test]
+        public void TestDb()
+        {
+
+            foreach (ContactData contact in GroupData.GetAll()[0].GetContacts())
+            {
+                System.Console.Out.WriteLine(contact);
+            };
+
+        }
     }
 }

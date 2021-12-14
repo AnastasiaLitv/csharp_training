@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class ContactRemovalTests : AuthTestBase
+    public class ContactRemovalTests : ContactTestBase
     {
 
         [Test]
@@ -25,15 +25,15 @@ namespace WebAddressBookTests
 
             app.Contact.IsContactExist(contact);
            
-            List<ContactData> oldContacts = app.Contact.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData toBeRemoved = oldContacts[0];
 
-            app.Contact.Remove(1);
+            app.Contact.Remove(toBeRemoved);
 
             Assert.AreEqual(oldContacts.Count - 1, app.Contact.GetContactCount());
 
-            List<ContactData> newContacts = app.Contact.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
 
-            ContactData toBeRemoved = oldContacts[0];
             oldContacts.RemoveAt(0);
             Assert.AreEqual(oldContacts, newContacts);
 
