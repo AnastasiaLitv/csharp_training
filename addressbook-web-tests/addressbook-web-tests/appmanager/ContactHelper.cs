@@ -58,6 +58,23 @@ namespace WebAddressBookTests
             };
         }
 
+        public void DeleteContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectGroup(group.Name);
+            SelectContact(contact.Id);
+            RemoveContactFromGroup();
+            manager.Navigator.GoToHomePage();
+        }
+       
+        public void RemoveContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+        public void SelectGroup(string groupName)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(groupName);
+        }
         public void AddContactToGroup(ContactData contact, GroupData group)
         {
             manager.Navigator.GoToHomePage();
