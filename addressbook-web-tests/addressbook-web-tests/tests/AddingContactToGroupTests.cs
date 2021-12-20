@@ -28,24 +28,19 @@ namespace WebAddressBookTests
             if (cn.Count == 0)
             {
                 ContactData contc = new ContactData("qqq", "www");
-                contc.Middlename = "erwe";
-                contc.Title = "qqsq";
-                contc.Nickname = "erwse";
-                contc.Company = "qewq";
-                contc.Address = "xxxs";
-                contc.HomePhone = "(22)2-22-3";
-                contc.Mobile = "wmwmw";
-                contc.Email = "rfefe@d.d";
-                contc.Email2 = "qqeeeq@ss.s";
-                contc.Email3 = "qqeeeq@test.s";
-                contc.Notes = "wekrweprkw";
-
                 app.Contact.Create(contc);
             }
 
             GroupData groups = GroupData.GetAll()[0];
             List<ContactData> oldList = groups.GetContacts();
-            ContactData contact = ContactData.GetAll().Except(oldList).First();
+            ContactData contact = ContactData.GetAll().Except(oldList).FirstOrDefault();
+
+            if (contact == null)
+            {
+                ContactData cont = new ContactData("asd", "zxc");
+                app.Contact.Create(cont);
+                contact = ContactData.GetAll().Except(oldList).First();
+            }
 
             app.Contact.AddContactToGroup(contact, groups);
 
@@ -55,7 +50,6 @@ namespace WebAddressBookTests
             oldList.Sort();
 
             Assert.AreEqual(oldList, newList);
-
         }
     }
 }
